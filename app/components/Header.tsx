@@ -76,11 +76,15 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#4B2615] text-white relative">
+    <header
+      className={`${
+        isMobileMenuOpen || isServicesOpen ? "bg-[#4B2615]" : "bg-transparent"
+      } text-white relative z-50`}
+    >
       {/* Main Navigation */}
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Placeholder */}
+          {/* Logo */}
           <div className="flex items-center">
             <div className="w-12 h-12 bg-white rounded flex items-center justify-center">
               <div className="w-8 h-8 bg-[#4B2615] rounded">logo</div>
@@ -94,7 +98,6 @@ const Header = () => {
                 {item.hasDropdown ? (
                   <div className="flex items-center space-x-1">
                     <a
-                      key={item.name}
                       href={item.href}
                       className="hover:text-amber-200 transition-colors duration-200"
                     >
@@ -120,21 +123,19 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Right Side Actions */}
+          {/* Right Side */}
           <div className="flex items-center space-x-4">
             {/* Language Selector */}
-            <div className="relative">
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center justify-center space-x-1 hover:text-amber-200 transition-colors duration-200"
-              >
-                <Globe className="w-4 h-4" />
-                <span>{currentLanguage}</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-            </div>
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center space-x-1 hover:text-amber-200 transition-colors duration-200"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{currentLanguage}</span>
+              <ChevronDown className="w-3 h-3" />
+            </button>
 
-            {/* Book Appointment Button */}
+            {/* Book Appointment */}
             <button className="hidden lg:block bg-transparent border border-white px-4 py-2 rounded hover:bg-white hover:text-amber-900 transition-colors duration-200">
               Book Appointment
             </button>
@@ -156,7 +157,7 @@ const Header = () => {
 
       {/* Services Dropdown - Desktop */}
       {isServicesOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#4B2615]  z-50 hidden lg:block">
+        <div className="absolute left-1/2 -translate-x-1/2 w-[90vw] rounded-b-xl mx-auto bg-[#4B2615] z-50 hidden lg:block">
           <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-4 gap-8">
               {servicesItems.map((column, columnIndex) => (
@@ -173,7 +174,7 @@ const Header = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-8 pt-6 ">
+            <div className="mt-8 pt-6">
               <button className="text-amber-200 hover:text-white transition-colors duration-200">
                 Read more
               </button>
@@ -184,16 +185,15 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#4B2615]  z-50 lg:hidden">
+        <div className="absolute left-0 w-full bg-[#4B2615] z-50 lg:hidden">
           <div className="container mx-auto px-4 py-6">
             <nav className="space-y-4">
               {mainNavItems.map((item) => (
                 <div key={item.name}>
                   {item.hasDropdown ? (
                     <div>
-                      <div className="flex items-center justify-between w-full py-2 hover:text-amber-200 transition-colors duration-200">
+                      <div className="flex items-center justify-between py-2 hover:text-amber-200 transition-colors duration-200">
                         <a
-                          key={item.name}
                           href={item.href}
                           className="hover:text-amber-200 transition-colors duration-200"
                         >
@@ -234,7 +234,7 @@ const Header = () => {
                 </div>
               ))}
             </nav>
-            <div className="pt-4  mt-6">
+            <div className="pt-4 mt-6">
               <button className="w-full bg-transparent border border-white px-4 py-2 rounded hover:bg-white hover:text-amber-900 transition-colors duration-200">
                 Book Appointment
               </button>
@@ -243,10 +243,10 @@ const Header = () => {
         </div>
       )}
 
-      {/* Overlay for mobile menu */}
+      {/* Backdrop overlay */}
       {(isMobileMenuOpen || isServicesOpen) && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0  z-40"
           onClick={() => {
             setIsMobileMenuOpen(false);
             setIsServicesOpen(false);
